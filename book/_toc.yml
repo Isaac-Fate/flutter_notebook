@@ -1,0 +1,14 @@
+format: jb-book
+root: intro
+chapters:
+- file: collections/index.md
+- file: concurrency/index.md
+  sections:
+  - file: concurrency/isolates.md
+  - file: concurrency/isolate_handler.md
+- file: camera/index.md
+  sections:
+  - file: camera/orientation-modes.md
+- file: tflite/index.md
+  sections:
+  - file: tflite/setup.md

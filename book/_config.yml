@@ -1,0 +1,36 @@
+title: Flutter Notebook
+author: Isaac FEI
+logo: resources/cover.jpg
+
+html:
+  favicon: resources/flutter.ico
+  use_issues_button: true
+  use_repository_button: true
+
+repository:
+  branch: master
+  url: https://github.com/Isaac-Fate/flutter-notebook
+
+execute:
+  execute_notebooks: "off"
+
+parse:
+  myst_enable_extensions:
+  # don't forget to list any other extensions you want enabled,
+  # including those that are enabled by default! See here: https://jupyterbook.org/en/stable/customize/config.html
+  
+  - html_image
+  # - amsmath
+  - colon_fence
+  # - deflist
+  - dollarmath
+  # - html_admonition
+  # - html_image
+  - linkify
+  # - replacements
+  # - smartquotes
+  - substitution
+  - tasklist
+
+  myst_url_schemes: [mailto, http, https] # URI schemes that will be recognised as external URLs in Markdown links
+  myst_dmath_double_inline: true  # Allow display math ($$) within an inline context
