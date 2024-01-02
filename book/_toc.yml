@@ -6,6 +6,7 @@ chapters:
   sections:
   - file: concurrency/isolates.md
   - file: concurrency/isolate_handler.md
+  - file: concurrency/completer.md
 - file: camera/index.md
   sections:
   - file: camera/orientation-modes.md

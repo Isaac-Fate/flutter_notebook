@@ -40,6 +40,10 @@ dependencies:
   logger: ^2.0.2+1
   flutter_inappwebview: ^5.8.0
   json_annotation: ^4.8.1
+  tuple: ^2.0.2
+  format: ^1.4.0
+  collection: ^1.18.0
+  ml_linalg: ^13.11.31
 
 dev_dependencies:
   flutter_test:
