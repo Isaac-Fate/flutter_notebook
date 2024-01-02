@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Collections &#8212; Flutter Notebook</title>
+    <title>Binary Search &#8212; Flutter Notebook</title>
   
   
   
@@ -62,12 +62,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'collections/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'fundamentals/binary-search';</script>
     <link rel="shortcut icon" href="../_static/flutter.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Concurrency" href="../concurrency/index.html" />
-    <link rel="prev" title="Flutter Notebook" href="../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -169,8 +167,8 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Collections</a></li>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">Collections</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../concurrency/index.html">Concurrency</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../concurrency/isolates.html">Isolates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../concurrency/isolate_handler.html">Isolate Handler</a></li>
@@ -260,7 +258,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/Isaac-Fate/flutter-notebook/issues/new?title=Issue%20on%20page%20%2Fcollections/index.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Isaac-Fate/flutter-notebook/issues/new?title=Issue%20on%20page%20%2Ffundamentals/binary-search.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -290,7 +288,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/collections/index.md" target="_blank"
+      <li><a href="../_sources/fundamentals/binary-search.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -372,7 +370,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Collections</h1>
+    <h1>Binary Search</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,8 +384,53 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="collections">
-<h1>Collections<a class="headerlink" href="#collections" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="binary-search">
+<h1>Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this heading">#</a></h1>
+<p>Package: <a class="reference external" href="https://pub.dev/packages/collection">collection</a></p>
+<p>In the following example, we have a list of users sorted by their age (in ascending order).
+We want to find the index of the specific user whose name is <code class="docutils literal notranslate"><span class="pre">Isaac</span></code>, and whose age is <code class="docutils literal notranslate"><span class="pre">24</span></code>.</p>
+<p>The schema of the <code class="docutils literal notranslate"><span class="pre">User</span></code> class is as follows:</p>
+<div class="highlight-dart notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">User</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">age</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A list of users is defined as follows:</p>
+<div class="highlight-dart notranslate"><div class="highlight"><pre><span></span><span class="kd">final</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="n">User</span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">14</span><span class="p">),</span>
+<span class="w">  </span><span class="n">User</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">18</span><span class="p">),</span>
+<span class="w">  </span><span class="n">User</span><span class="p">(</span><span class="s1">&#39;Chris&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">),</span>
+<span class="w">  </span><span class="n">User</span><span class="p">(</span><span class="s1">&#39;Isaac&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">),</span>
+<span class="w">  </span><span class="n">User</span><span class="p">(</span><span class="s1">&#39;Helen&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">38</span><span class="p">),</span>
+<span class="w">  </span><span class="n">User</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">),</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">binarySearch</span></code> function from the <code class="docutils literal notranslate"><span class="pre">collection</span></code> package, we can find the index of the user whose name is <code class="docutils literal notranslate"><span class="pre">Isaac</span></code>:</p>
+<div class="highlight-dart notranslate"><div class="highlight"><pre><span></span><span class="kd">final</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">binarySearch</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span><span class="w"> </span><span class="kt">String</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">  </span><span class="n">users</span><span class="p">,</span>
+<span class="w">  </span><span class="n">User</span><span class="p">(</span><span class="s1">&#39;Isaac&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">),</span>
+<span class="w">  </span><span class="nl">compare:</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">compareTo</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">age</span><span class="p">),</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>We provided a <code class="docutils literal notranslate"><span class="pre">compare</span></code> function to the <code class="docutils literal notranslate"><span class="pre">binarySearch</span></code> function, which is used to compare two users by their age.</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">value</span></code> parameter of the <code class="docutils literal notranslate"><span class="pre">binarySearch</span></code> function is an instance of the <code class="docutils literal notranslate"><span class="pre">User</span></code> class.
+The problem is sometimes we only know the age of the user we want to find, but we don’t care about the name.</p>
+<p>The trick is to create a dummy user with the same age, but with an empty name (or any other name):</p>
+<div class="highlight-dart notranslate"><div class="highlight"><pre><span></span><span class="kd">final</span><span class="w"> </span><span class="n">dummyUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">);</span>
+<span class="c1">// Or User(&#39;Anyone&#39;, 24) since we don&#39;t care about the name</span>
+
+<span class="kd">final</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">binarySearch</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span><span class="w"> </span><span class="kt">String</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">  </span><span class="n">users</span><span class="p">,</span>
+<span class="w">  </span><span class="n">dummyUser</span><span class="p">,</span>
+<span class="w">  </span><span class="nl">compare:</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">compareTo</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">age</span><span class="p">),</span>
+<span class="p">);</span>
+</pre></div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -403,7 +446,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./collections"
+            path: "./fundamentals"
         },
         predefinedOutput: true
     }
@@ -420,24 +463,6 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../intro.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Flutter Notebook</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../concurrency/index.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Concurrency</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
