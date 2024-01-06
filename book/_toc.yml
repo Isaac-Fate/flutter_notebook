@@ -10,6 +10,9 @@ chapters:
 - file: camera/index.md
   sections:
   - file: camera/orientation-modes.md
+- file: videos/index.md
+  sections:
+  - file: videos/loading-and-playing-videos-from-firebase-storage.md
 - file: tflite/index.md
   sections:
   - file: tflite/setup.md
